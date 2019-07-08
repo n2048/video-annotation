@@ -1,0 +1,65 @@
+version: "3.7"
+
+services:
+  frontend:
+    image: node:alpine
+    volumes:
+      - ./frontend/:/app/
+    working_dir: /app 
+    restart: always
+    ports: 
+      - 3000:3000
+    environment:
+      BACKEND: http://localhost:8000
+    command: npm start
+
+  backend: 
+    image: node:alpine
+    volumes:
+     - ./backend/:/app/
+    working_dir: /app 
+    restart: always
+    ports: 
+      - 8000:8000
+    command: npm start
+    environment:
+      MINIO_ACCESS_KEY: dml-minio
+      MINIO_SECRET_KEY: dml-minio
+      MINIO_ENDPOINT: bucket
+      MINIO_PORT: 9000
+      MINIO_SECURITY: "false"
+      MINIO_BUCKET: videos
+      MINIO_UPLOADS_FOLDER_NAME: uploads
+
+  bucket: 
+    image: minio/minio
+    restart: always
+    ports:
+      - 9000:9000
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ACCESS_KEY: dml-minio
+      MINIO_SECRET_KEY: dml-minio
+    command: server /data
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: dml
+      POSTGRES_USER: dml
+      POSTGRES_PASSWORD: dansemachinelarning
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+        
+volumes:
+  db-data:
+  minio-data:

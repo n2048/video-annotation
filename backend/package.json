@@ -1,0 +1,22 @@
+{
+  "name": "video-annotation",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Mauricio van der Maesen de Sombreff <mauricio@n2048.com>",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "start": "./bin/app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-middleware-minio": "^3.1.0",
+    "http-errors": "^1.7.3",
+    "minio": "^7.0.10",
+    "pino": "^5.12.6",
+    "pino-http": "^4.2.0",
+    "pino-pretty": "^3.2.0"
+  }
+}
