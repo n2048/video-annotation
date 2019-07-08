@@ -24,12 +24,11 @@ services:
     command: npm start
     environment:
       MINIO_ACCESS_KEY: dml-minio
-      MINIO_SECRET_KEY: dml-minio
+      MINIO_SECRET_KEY: dml-minio 
       MINIO_ENDPOINT: bucket
       MINIO_PORT: 9000
       MINIO_SECURITY: "false"
       MINIO_BUCKET: videos
-      MINIO_UPLOADS_FOLDER_NAME: uploads
 
   bucket: 
     image: minio/minio

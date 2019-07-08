@@ -1,5 +1,7 @@
 'use strict'
 const express = require('express')
+const cors = require('cors');
+
 const httpErrors = require('http-errors')
 const pino = require('pino')
 const pinoHttp = require('pino-http')
@@ -41,7 +43,8 @@ module.exports = function main (options, cb) {
 
   // Create the express app
   const app = express()
-
+  app.use(cors());
+  
 
   // Common middleware
   // app.use(/* ... */)

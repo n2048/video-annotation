@@ -28,9 +28,23 @@ module.exports = function (app, opts) {
     var stream = minioClient.listObjects(process.env.MINIO_BUCKET,'', true);
     var videos  = []; 
     stream.on('data', function(obj) { videos.push(obj) } );
-    stream.on('error', function(err) { res.error(err) } );
+    stream.on('error', function(err) { console.error(err); res.send({error: err}); } );
     stream.on('end', function() { res.send(videos); } );
-    // stream.on('close', function() { res.close(); });
+  })
+
+  app.get('/api/videos/:videoId/link', function(req, res) {
+    minioClient.presignedGetObject(process.env.MINIO_BUCKET,req.params.videoId,24*60*60, function(err, presignedUrl) {
+      if (err) {
+        console.error(err); res.send({error: err});
+      } 
+      else{
+        res.send({
+          videoId: req.params.videoId,
+          presignedUrl: presignedUrl
+        });
+      }
+    });
+
   })
 
 }
